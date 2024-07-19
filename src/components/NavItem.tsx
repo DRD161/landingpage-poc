@@ -1,5 +1,21 @@
-const NavItem = ({ title, columnData, isActive, setActiveIndex, index }) => {
-  const columns = new Array(3).fill(columnData); // create columns using columnData
+import { ColumnData } from '../types.ts';
+
+export interface NavItemProps {
+  title: string;
+  columnData: ColumnData;
+  isActive: boolean;
+  index: number;
+  setActiveIndex: (index: number) => void;
+}
+
+const NavItem = ({
+  title,
+  columnData,
+  isActive,
+  setActiveIndex,
+  index,
+}: NavItemProps) => {
+  const columns: ColumnData[] = new Array(3).fill(columnData); // create columns using columnData
 
   return (
     <>

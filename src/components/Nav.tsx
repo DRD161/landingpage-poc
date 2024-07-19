@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import NavItem from '../components/NavItem';
-import GetStartedCta from './GetStartedCta.jsx';
+import NavItem, { NavItemProps } from '../components/NavItem';
+import GetStartedCta from './GetStartedCta.tsx';
 
-const Nav = ({ items }) => {
-  const [activeIndex, setActiveIndex] = useState(null);
+interface ItemsProps {
+  items: NavItemProps[];
+}
+
+const Nav = ({ items }: ItemsProps) => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
     <nav className="nav" onMouseLeave={() => setActiveIndex(null)}>

@@ -1,8 +1,13 @@
 import facebook from '../assets/facebook.svg';
 import twitter from '../assets/twitter.svg';
-import GetStartedCta from './GetStartedCta.jsx';
+import GetStartedCta from './GetStartedCta.tsx';
+import { FooterLinks } from '../types.ts';
 
-const Footer = ({ links }) => {
+interface FooterProps {
+  links: FooterLinks;
+}
+
+const Footer = ({ links }: FooterProps) => {
   return (
     <footer className="footer">
       <div className="footer-links">

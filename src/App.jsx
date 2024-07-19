@@ -1,9 +1,9 @@
-import Nav from './components/Nav';
-import Footer from './components/Footer';
-import Hero from './components/Hero';
-import About from './components/About';
-import { navItems } from './data/data.js';
-import { footerLinks } from './data/data.js';
+import Nav from './components/Nav.tsx';
+import Footer from './components/Footer.tsx';
+import Hero from './components/Hero.tsx';
+import About from './components/About.tsx';
+import { navItems } from './data/data.ts';
+import { footerLinks } from './data/data.ts';
 
 function App() {
   return (

@@ -1,4 +1,6 @@
-export const navItems = [
+import { NavItem, FooterLinks } from '../types.ts';
+
+export const navItems: NavItem[] = [
   {
     title: 'Portfolio',
     columnData: {
@@ -53,7 +55,7 @@ export const navItems = [
   },
 ];
 
-export const footerLinks = {
+export const footerLinks: FooterLinks = {
   topLinks: [
     'Portfolio',
     'Our Focus',

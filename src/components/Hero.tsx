@@ -1,25 +1,39 @@
 import { useState, useEffect, useRef } from 'react';
 
+interface HeroProps {
+  header: string;
+  subHeader: string;
+}
+
 const options = {
   root: null,
   rootMargin: '0px',
   threshold: 0.5,
 };
 
-const Hero = ({ header, subHeader }) => {
-  const targetRef = useRef(null);
+const Hero = ({ header, subHeader }: HeroProps) => {
+  const targetRef = useRef<HTMLHeadingElement | null>(null);
 
   const [isVisible, setVisible] = useState(false);
 
   useEffect(() => {
+    const refElement = targetRef.current;
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
       setVisible(entry.isIntersecting);
-      if (entry.isIntersecting) {
-        observer.unobserve(targetRef.current);
+      if (entry.isIntersecting && refElement) {
+        observer.unobserve(refElement);
       }
     }, options);
-    observer.observe(targetRef.current);
+    if (refElement) {
+      observer.observe(refElement);
+    }
+
+    return () => {
+      if (refElement) {
+        observer.unobserve(refElement);
+      }
+    };
   }, []);
 
   return (
