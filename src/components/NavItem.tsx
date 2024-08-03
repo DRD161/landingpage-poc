@@ -1,70 +1,65 @@
+import { forwardRef, KeyboardEvent } from 'react';
 import { ColumnData } from '../types.ts';
+import DropdownContent from './DropdownContent';
 
 export interface NavItemProps {
   title: string;
   columnData: ColumnData;
   isActive: boolean;
   index: number;
-  setActiveIndex: (index: number) => void;
+  setActiveIndex: (index: number | null) => void;
+  isMobile: boolean;
 }
 
-const NavItem = ({
-  title,
-  columnData,
-  isActive,
-  setActiveIndex,
-  index,
-}: NavItemProps) => {
-  const columns: ColumnData[] = new Array(3).fill(columnData); // create columns using columnData
+const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
+  ({ title, columnData, isActive, index, setActiveIndex, isMobile }, ref) => {
+    const columns: ColumnData[] = new Array(3).fill(columnData); // create columns using columnData.
 
-  return (
-    <>
-      <a
-        onMouseEnter={() => setActiveIndex(index)}
-        onFocus={() => setActiveIndex(index)}
-        href="#"
-        className={isActive ? 'nav-link nav-link-active' : 'nav-link'}
-      >
-        {title}
-      </a>
-      {isActive && (
-        <div className="dropdown-wrapper">
-          <div className="dropdown-menu">
-            {columns.map((column, index) => (
-              <>
-                <div key={index}>
-                  <div className="dropdown-column" key={index}>
-                    <h3 className="dropdown-header">{column.header}</h3>
-                    <img
-                      src={column.image}
-                      alt={column.header}
-                      className="dropdown-image"
-                    />
-                    <div className="dropdown-items">
-                      {column.items.map((item, index) => (
-                        <a
-                          href={item.href}
-                          key={index}
-                          className="dropdown-link"
-                        >
-                          {item.name}
-                        </a>
-                      ))}
-                    </div>
-                    <hr />
-                    <a href={column.link.href} className="dropdown-bottom-link">
-                      {column.link.name}
-                    </a>
-                  </div>
-                </div>
-                <div className="dropdown-divider"></div>
-              </>
-            ))}
-          </div>
+    const keyPressOpen = (event: KeyboardEvent<HTMLElement>) => {
+      if (event.key === ' ' || event.key === 'Enter') {
+        event.preventDefault();
+        setActiveIndex(index);
+        document.body.classList.remove('no-scroll');
+      }
+    };
+
+    const keyPressClose = (event: KeyboardEvent<HTMLElement>) => {
+      if (event.key === ' ' || event.key === 'Enter') {
+        event.preventDefault();
+        setActiveIndex(null);
+        document.body.classList.remove('no-scroll');
+      }
+    };
+
+    return (
+      <>
+        <a
+          onMouseEnter={() => setActiveIndex(index)}
+          onFocus={() => setActiveIndex(index)} // only need focus for desktop.
+          onKeyDown={keyPressOpen} // allow dropdown to show when Enter or Space key is pressed.
+          href="#"
+          className={isActive ? 'nav-link nav-link-active' : 'nav-link'}
+          aria-expanded={isActive ? 'true' : 'false'}
+          aria-haspopup="menu"
+        >
+          {title}
+        </a>
+        <div
+          ref={ref}
+          className={
+            isActive ? 'dropdown-wrapper dropdown-visible' : 'dropdown-wrapper'
+          }
+        >
+          <DropdownContent
+            isMobile={isMobile}
+            columns={columns}
+            setActiveIndex={setActiveIndex}
+            keyPressClose={keyPressClose}
+          />
         </div>
-      )}
-    </>
-  );
-};
+      </>
+    );
+  },
+);
 
 export default NavItem;
