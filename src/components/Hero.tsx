@@ -14,7 +14,7 @@ const options = {
 const Hero = ({ header, subHeader }: HeroProps) => {
   const targetRef = useRef<HTMLHeadingElement | null>(null);
 
-  const [isVisible, setVisible] = useState(false);
+  const [isVisible, setVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const refElement = targetRef.current;

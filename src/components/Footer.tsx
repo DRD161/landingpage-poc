@@ -11,7 +11,7 @@ const Footer = ({ links }: FooterProps) => {
   return (
     <footer className="footer">
       <div className="footer-links">
-        {links.topLinks.map((item, index) => (
+        {links.topLinks.map((item: string, index: number) => (
           <a href="#" className="footer-link" key={index}>
             {item}
           </a>
@@ -19,7 +19,7 @@ const Footer = ({ links }: FooterProps) => {
         <GetStartedCta text="Get Started" />
       </div>
       <div className="footer-utility">
-        {links.utilityLinks.map((item, index) => (
+        {links.utilityLinks.map((item: string, index: number) => (
           <a href="#" className="footer-link utility-link" key={index}>
             {item}
           </a>
