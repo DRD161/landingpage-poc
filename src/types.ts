@@ -15,7 +15,7 @@ export interface ColumnData {
   link: Link;
 }
 
-export interface NavItem {
+export interface NavItemData {
   title: string;
   columnData: ColumnData;
 }
