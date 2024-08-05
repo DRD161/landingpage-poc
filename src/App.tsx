@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import Nav from './components/Nav.tsx';
 import MobileNav from './components/MobileNav.tsx';
 // import Footer from './components/Footer.tsx';
@@ -6,25 +5,10 @@ import Hero from './components/Hero.tsx';
 // import About from './components/About.tsx';
 import { navItems } from './data/data.ts';
 // import { footerLinks } from './data/data.ts';
+import useMatchMedia from './hooks/useMatchMedia';
 
 function App() {
-  const [isMobile, setIsMobile] = useState<boolean>(
-    window.matchMedia('(max-width: 768px)').matches,
-  );
-
-  useEffect(() => {
-    const mediaQuery: MediaQueryList = window.matchMedia('(max-width: 768px)');
-
-    const handleMediaChange = (event: MediaQueryListEvent) => {
-      setIsMobile(event.matches);
-    };
-
-    mediaQuery.addEventListener('change', handleMediaChange);
-
-    return () => {
-      mediaQuery.removeEventListener('change', handleMediaChange);
-    };
-  });
+  const isMobile = useMatchMedia('(max-width: 768px)');
 
   return (
     <>
