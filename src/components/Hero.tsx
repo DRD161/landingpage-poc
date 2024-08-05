@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import useIntersection from '../hooks/useIntersection.ts';
 
 interface HeroProps {
   header: string;
@@ -13,28 +14,7 @@ const options = {
 
 const Hero = ({ header, subHeader }: HeroProps) => {
   const targetRef = useRef<HTMLHeadingElement | null>(null);
-
-  const [isVisible, setVisible] = useState<boolean>(false);
-
-  useEffect(() => {
-    const refElement = targetRef.current;
-    const observer = new IntersectionObserver((entries) => {
-      const entry = entries[0];
-      setVisible(entry.isIntersecting);
-      if (entry.isIntersecting && refElement) {
-        observer.unobserve(refElement);
-      }
-    }, options);
-    if (refElement) {
-      observer.observe(refElement);
-    }
-
-    return () => {
-      if (refElement) {
-        observer.unobserve(refElement);
-      }
-    };
-  }, []);
+  const isVisible = useIntersection(targetRef, options);
 
   return (
     <section className={isVisible ? 'hero background-shift' : 'hero'}>
